@@ -2,7 +2,6 @@ package vegabobo.dsusideloader.util
 
 import android.content.ContentResolver
 import android.content.Context
-import android.database.Cursor
 import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.documentfile.provider.DocumentFile
@@ -48,12 +47,17 @@ class FilenameUtils {
         }
 
         fun queryName(resolver: ContentResolver, uri: Uri): String {
-            val returnCursor: Cursor = resolver.query(uri, null, null, null, null)!!
-            val nameIndex: Int = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            returnCursor.moveToFirst()
-            val name: String = returnCursor.getString(nameIndex)
-            returnCursor.close()
-            return name
+            resolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
+                ?.use { cursor ->
+                    val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    if (nameIndex >= 0 && cursor.moveToFirst()) {
+                        val name = cursor.getString(nameIndex)
+                        if (!name.isNullOrEmpty()) {
+                            return name
+                        }
+                    }
+                }
+            return uri.lastPathSegment?.substringAfterLast('/') ?: ""
         }
 
         fun getDigits(input: String): String {

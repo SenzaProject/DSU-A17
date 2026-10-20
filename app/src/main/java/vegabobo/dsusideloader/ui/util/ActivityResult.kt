@@ -16,8 +16,9 @@ fun launcherAcResult(
     return rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
     ) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            result(it.data!!.data!!)
+        val uri = it.data?.data
+        if (it.resultCode == Activity.RESULT_OK && uri != null) {
+            result(uri)
         }
     }
 }

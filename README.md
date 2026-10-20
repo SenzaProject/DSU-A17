@@ -1,3 +1,7 @@
+> **Unofficial fork** of [DSU Sideloader](https://github.com/VegaBobo/DSU-Sideloader) by **VegaBobo** and [contributors](https://github.com/VegaBobo/DSU-Sideloader/graphs/contributors).
+> All credit for the original app goes to them. This fork adds a file picker fix for Android 17+.
+> Licensed under Apache-2.0.
+
 # DSU Sideloader
 
 A simple app made to help users easily install GSIs via DSU's Android feature.
